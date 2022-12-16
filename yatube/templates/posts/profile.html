@@ -16,12 +16,10 @@
           </li>
         </ul>
         <p>{{ post.text|linebreaksbr }}</p>
-        <a href="{% url 'posts:post_detail' post.id %}">Подробная информация </a>
-      </article>
+        <p><a href="{% url 'posts:post_detail' post.id %}">Подробная информация </a></p>
       {% if post.group %} 
-        <li>  
-        <a href="{% url 'posts:group_list' post.group.slug %}">{{post.group.slug}}</a>
-        </li>
+          <a href="{% url 'posts:group_list' post.group.slug %}">{{post.group.slug}}</a>
+      </article>
       {% endif %}
       <hr>
     {%endfor%}

@@ -21,6 +21,7 @@ def index(request):
 
     return render(request, template, context)
 
+
 def group_posts(request, slug):
     """Страница постов по группам"""
     group = get_object_or_404(Group, slug=slug)
@@ -38,12 +39,13 @@ def profile(request, username):
     """Страница профиля пользователя"""
     author = get_object_or_404(User, username=username)
     posts = Post.objects.filter(author=author).all()
-    post_count = author.posts.all().count
+    posts_count = author.posts.all().count
     page_obj = get_page_context(request, posts)
     template = 'posts/profile.html'
     context = {
         'author': author,
         'page_obj': page_obj,
+        'posts_count': posts_count
     }
 
     return render(request, template, context)
@@ -57,6 +59,7 @@ def post_detail(request, post_id):
         'post': post,
     }
     return render(request, template, context)
+
 
 @login_required
 def post_create(request):

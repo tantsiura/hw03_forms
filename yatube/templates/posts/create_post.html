@@ -31,11 +31,7 @@
                     </div>
                   {% endfor %}
               {% endif %}
-              {% if is_edit %}
-                <form method="post" action="{% url 'posts:post_edit' post.id %}">
-              {% else %}
                 <form method="post" action="{% url 'posts:post_create' %}">
-              {% endif %}
               {% csrf_token %}
               {% include 'includes/create_post_form.html' %}
               <div class="d-flex justify-content-center">

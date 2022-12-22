@@ -4,18 +4,16 @@ from django.shortcuts import get_object_or_404, redirect, render
 
 from .forms import PostForm
 from .models import Group, Post, User
-from .utils import get_page_context
+from .utils import get_page_of_paginator
 
 
 def index(request):
     """Главная страница"""
     posts = Post.objects.all()
-    page_obj = get_page_context(request, posts)
-    title = 'Последние обновления на сайте'
+    page_obj = get_page_of_paginator(request, posts)
     template = 'posts/index.html'
 
     context = {
-        'title': title,
         'page_obj': page_obj,
     }
 
@@ -26,7 +24,7 @@ def group_posts(request, slug):
     """Страница постов по группам"""
     group = get_object_or_404(Group, slug=slug)
     posts = group.posts.all()
-    page_obj = get_page_context(request, posts)
+    page_obj = get_page_of_paginator(request, posts)
     template = 'posts/group_list.html'
     context = {
         'group': group,
@@ -40,7 +38,7 @@ def profile(request, username):
     author = get_object_or_404(User, username=username)
     posts = Post.objects.filter(author=author).all()
     posts_count = author.posts.all().count
-    page_obj = get_page_context(request, posts)
+    page_obj = get_page_of_paginator(request, posts)
     template = 'posts/profile.html'
     context = {
         'author': author,
@@ -67,7 +65,7 @@ def post_create(request):
     form = PostForm(request.POST or None)
     template = 'posts/create_post.html'
     if not form.is_valid():
-        return render(request, template, {'form': form})
+        return render(request, template, {'form': form, 'is_edit': True})
     new_post = form.save(commit=False)
     new_post.author = request.user
     form.save()

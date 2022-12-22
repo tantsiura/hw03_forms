@@ -10,6 +10,10 @@
         <li>  
         <a href="{% url 'posts:group_list' post.group.slug %}">{{post.group.slug}}</a>
         </li>
+      {% endif %}
+      <p><a href="{% url 'posts:post_detail' post.id %}">Подробная информация </a></p>
+      {% if post.author == user %}
+        <a class="btn btn-primary" href="{% url 'posts:post_edit' post.pk %}">редактировать запись</a>
       {% endif %} 
     </ul>      
     <p>{{ post.text|linebreaksbr }}</p>

@@ -1,8 +1,8 @@
+from django.conf import global_settings
 from django.contrib.auth import get_user_model
 from django.db import models
 
 User = get_user_model()
-QUANTITY_POSTS = 10
 
 
 class Group(models.Model):
@@ -41,8 +41,8 @@ class Post(models.Model):
                                )
 
     class Meta:
-        ordering = ['-pub_date']
+        ordering = ('-pub_date',)
         verbose_name_plural = 'posts'
 
     def __str__(self):
-        return self.text[:QUANTITY_POSTS]
+        return self.text[:global_settings.characters_in_post]

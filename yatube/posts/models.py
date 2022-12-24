@@ -1,4 +1,4 @@
-from django.conf import global_settings
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import models
 
@@ -45,4 +45,4 @@ class Post(models.Model):
         verbose_name_plural = 'posts'
 
     def __str__(self):
-        return self.text[:global_settings.characters_in_post]
+        return self.text[:settings.ITEMS_PER_PAGE]
